@@ -69,6 +69,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const shot = throttledGenerateShot();
         if (shot) {
           shot.onMove = function onMove() {
+            for (let i = 0; i < NUMBER_OF_OBSTACLES; i += 1) {
+              if (obstacle[i]) {
+                if (Math.pow(obstacles[i].x - shot.x, 2) + Math.pow(obstacles[i].y - shot.y, 2) < Math.pow(obstacles[i].radius + shot.radius, 2)) {
+                  shot.destroy();
+                  obstacles[i].destroy();
+               }
+              }    
+            }
             /*
             * You should check whether shot has collision with any obstacles or not
             * If yes, destroy both shot and collision
